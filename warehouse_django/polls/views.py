@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from .models import Products, Brands
-import datetime
 
 def index(request):
     data = {
@@ -13,12 +12,17 @@ def product_list(request):
 
     data = {
         'data': result,
-        'title':'Product List'
+        'title':'Product List',
+        'brands': Brands.objects.all()
     }   
     return render(request, "product/index.html", data)
 
 def product_create(request):
-    return render(request, "product/create.html")
+    data = {
+        'brands': Brands.objects.all(),
+    }
+
+    return render(request, "product/create.html", data)
 
 def product_save(request):
     if request.method == 'POST':
@@ -27,7 +31,7 @@ def product_save(request):
         description = request.POST['description']
         brand_id = request.POST['brand_id']
 
-        product = Products(name=name, price=price, description=description, brand_id=brand_id)
+        product = Products(name=name, price=price, description=description, brand_id=int(brand_id))
         product.save()
 
     return redirect('product.list')

@@ -36,6 +36,7 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <!-- END: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/datatables.min.css' %}" />
 </head>
 <!-- END: Head-->
 
@@ -111,28 +112,22 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="nav-item">
-                    <a class="d-flex align-items-center" href="index.html"><i data-feather="home"></i><span
-                            class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a>
+                <li class="nav-item {% if request.path == '/' %} active {% endif %}">
+                    <a class="d-flex align-items-center" href="{%  url 'dashboard' %}"><i data-feather="home"></i><span
+                            class="menu-title text-truncate" data-i18n="Dashboards">Dashboard</span></a>
                 </li>
                 <li class="navigation-header">
                     <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
                 </li>
-                <li class="nav-item">
-                    <a class="d-flex align-items-center" href="app-email.html"><i data-feather="mail"></i><span
-                            class="menu-title text-truncate" data-i18n="Email">Email</span></a>
+                <li class="nav-item {% if request.path == '/product' %} active {% endif %}">
+                    <a class="d-flex align-items-center" href="{%  url 'product.list' %}"><i
+                            data-feather="mail"></i><span class="menu-title text-truncate"
+                            data-i18n="Email">Product</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="d-flex align-items-center" href="app-chat.html"><i data-feather="message-square"></i><span
-                            class="menu-title text-truncate" data-i18n="Chat">Chat</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="d-flex align-items-center" href="app-todo.html"><i data-feather="check-square"></i><span
-                            class="menu-title text-truncate" data-i18n="Todo">Todo</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="d-flex align-items-center" href="app-calendar.html"><i data-feather="calendar"></i><span
-                            class="menu-title text-truncate" data-i18n="Calendar">Calendar</span></a>
+                <li class="nav-item {% if request.path == '/brand' %} active {% endif %}">
+                    <a class="d-flex align-items-center" href="{%  url 'brand.list' %}"><i
+                            data-feather="message-square"></i><span class="menu-title text-truncate"
+                            data-i18n="Chat">Brand</span></a>
                 </li>
             </ul>
         </div>
@@ -144,7 +139,7 @@
         <div class="content-wrapper container-xxl p-0">
             <div class="content-body">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 py-5" style="margin-top: -120px">
                         <div class="container-fluid content-header row">
                             <div class="content-header-left col-md-9 col-12 mb-2">
                                 <div class="row breadcrumbs-top">
@@ -189,6 +184,19 @@
             }
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                responsive: true,
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                    }
+                },
+            });
+        });
+    </script>
+    <script src="{% static 'js/datatables.min.js' %}"></script>
 </body>
 <!-- END: Body-->
 
