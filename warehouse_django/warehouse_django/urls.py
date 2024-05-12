@@ -20,5 +20,12 @@ from polls import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
+    path('', views.index, name='dashboard'),
+    path('product', views.product_list, name='product.list'),
+    path('product/create', views.product_create, name='product.create'),
+    path('product/save', views.product_save, name='product.save'),
+
+    path('brand', views.brand_list, name='brand.list'),
+    path('brand/create', views.brand_create, name='brand.create'),
+    path('brand/save', views.brand_save, name='brand.save'),
 ]
