@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-extended.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/colors.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static '' %}css/components.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/core/menu/menu-types/vertical-menu.css' %}" />
@@ -129,6 +129,11 @@
                             data-feather="message-square"></i><span class="menu-title text-truncate"
                             data-i18n="Chat">Brand</span></a>
                 </li>
+                <li class="nav-item {% if request.path == '/location' %} active {% endif %}">
+                    <a class="d-flex align-items-center" href="{%  url 'location.list' %}"><i
+                            data-feather="message-square"></i><span class="menu-title text-truncate"
+                            data-i18n="Chat">Location</span></a>
+                </li>
             </ul>
         </div>
     </div>
@@ -187,7 +192,6 @@
     <script>
         $(document).ready(function () {
             $('#dataTable').DataTable({
-                responsive: true,
                 layout: {
                     topStart: {
                         buttons: ['copy', 'csv', 'excel', 'pdf', 'print']

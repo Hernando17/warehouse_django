@@ -24,8 +24,17 @@ urlpatterns = [
     path('product', views.product_list, name='product.list'),
     path('product/create', views.product_create, name='product.create'),
     path('product/save', views.product_save, name='product.save'),
+    path('product/edit/<int:id>', views.product_edit, name='product.edit'),
+    path('product/update/<int:id>', views.product_update, name='product.update'),
 
     path('brand', views.brand_list, name='brand.list'),
     path('brand/create', views.brand_create, name='brand.create'),
     path('brand/save', views.brand_save, name='brand.save'),
+    path('brand/edit/<int:id>', views.brand_edit, name='brand.edit'),
+    path('brand/updat/<int:id>e', views.brand_update, name='brand.update'),
+    path('brand/delete/<int:id>', views.brand_delete, name='brand.delete'),
+
+    path('location', views.location_list, name='location.list'),
+    path('location/create', views.location_create, name='location.create'),
+    path('location/save', views.location_save, name='location.save'),
 ]

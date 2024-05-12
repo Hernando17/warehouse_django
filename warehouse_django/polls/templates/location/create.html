@@ -2,25 +2,15 @@
 <div class="col-md-6 col-12 w-100">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Brand Create</h4>
+            <h4 class="card-title">Location Create</h4>
         </div>
         <div class="card-body">
-            <form action="{% url 'brand.save' %}" method="post" class="needs-validation">
+            <form action="{% url 'location.save' %}" method="post" class="needs-validation">
                 {% csrf_token %}
                 <div class="mb-1">
                     <label class="form-label" for="name">Name</label>
                     <input type="text" id="name" class="form-control" placeholder="Name" aria-label="Name"
                         aria-describedby="name" required="true" name="name">
-                </div>
-                <div class="mb-1">
-                    <label class="form-label" for="email">Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Email" aria-label="email"
-                        name="email">
-                </div>
-                <div class="mb-1">
-                    <label class="form-label" for="website">Website</label>
-                    <input type="text" class="form-control picker flatpickr-input" placeholder="Website" name="website"
-                        id="website">
                 </div>
                 <div class="mb-1">
                     <label class="form-label" for="phone">Phone</label>

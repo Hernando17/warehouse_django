@@ -1,0 +1,43 @@
+{% extends "layout.html" %} {% block content %}
+<div class="col-md-6 col-12 w-100">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Product Edit</h4>
+        </div>
+        <div class="card-body">
+            <form action="{% url 'product.update' data.id %}" method="post" class="needs-validation">
+                {% csrf_token %}
+                <div class="mb-1">
+                    <label class="form-label" for="name">Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Name" aria-label="Name"
+                        aria-describedby="name" required="true" name="name" value="{{ data.name }}">
+                </div>
+                <div class="mb-1">
+                    <label class="form-label" for="price">price</label>
+                    <input type="number" id="price" class="form-control" placeholder="price" aria-label="price"
+                        name="price" value="{{ data.price }}">
+                </div>
+                <div class="mb-1">
+                    <label class="form-label" for="brand_id">Brand</label>
+                    <select class="form-select" id="brand_id" name="brand_id" value="{{ data.brand_id }}">
+                        <option value="">Select Brand</option>
+                        {% for brand in brands %}
+                        {% if brand.id == data.brand_id %}
+                        <option value="{{brand.id}}" selected>{{brand.name}}</option>
+                        {% else %}
+                        <option value="{{brand.id}}">{{brand.name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-1">
+                    <label class="d-block form-label" for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"
+                        placeholder="Description">{{ data.description }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary waves-effect waves-float waves-light">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
