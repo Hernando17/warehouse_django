@@ -37,4 +37,7 @@ urlpatterns = [
     path('location', views.location_list, name='location.list'),
     path('location/create', views.location_create, name='location.create'),
     path('location/save', views.location_save, name='location.save'),
+    path('location/edit/<int:id>', views.location_edit, name='location.edit'),
+    path('location/update/<int:id>', views.location_update, name='location.update'),
+    path('location/delete/<int:id>', views.location_delete, name='location.delete'),
 ]

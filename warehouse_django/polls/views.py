@@ -145,3 +145,34 @@ def location_save(request):
         location.save()
 
     return redirect('location.list')
+
+def location_edit(request, id):
+    location = Locations.objects.get(id=id)
+
+    data = {
+        'data': location,
+    }
+
+    return render(request, "location/edit.html", data)
+
+def location_update(request, id):
+    if request.method == 'POST':
+        name = request.POST['name']
+        description = request.POST['description']
+        phone = request.POST['phone']
+        address = request.POST['address']
+
+        location = Locations.objects.get(id=id)
+        location.name = name
+        location.description = description
+        location.phone = phone
+        location.address = address
+        location.save()
+
+    return redirect('location.list')
+
+def location_delete(request, id):
+    location = Locations.objects.get(id=id)
+    location.delete()
+
+    return redirect('location.list')
