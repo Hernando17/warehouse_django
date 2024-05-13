@@ -134,6 +134,16 @@
                             data-feather="message-square"></i><span class="menu-title text-truncate"
                             data-i18n="Chat">Location</span></a>
                 </li>
+                <li class="nav-item {% if request.path == '/stock_move' %} active {% endif %}">
+                    <a class="d-flex align-items-center" href="{%  url 'stock_move.list' %}"><i
+                            data-feather="message-square"></i><span class="menu-title text-truncate"
+                            data-i18n="Chat">Stock Move</span></a>
+                </li>
+                <li class="nav-item {% if request.path == '/stock_quantity' %} active {% endif %}">
+                    <a class="d-flex align-items-center" href="{%  url 'stock_quantity.list' %}"><i
+                            data-feather="message-square"></i><span class="menu-title text-truncate"
+                            data-i18n="Chat">Stock Quantity</span></a>
+                </li>
             </ul>
         </div>
     </div>

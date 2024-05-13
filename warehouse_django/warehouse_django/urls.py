@@ -40,4 +40,14 @@ urlpatterns = [
     path('location/edit/<int:id>', views.location_edit, name='location.edit'),
     path('location/update/<int:id>', views.location_update, name='location.update'),
     path('location/delete/<int:id>', views.location_delete, name='location.delete'),
+
+    path('stock_move', views.stock_move_list, name='stock_move.list'),
+    path('stock_move/create', views.stock_move_create, name='stock_move.create'),
+    path('stock_move/save', views.stock_move_save, name='stock_move.save'),
+
+    path('stock_quantity', views.stock_quantity_list, name='stock_quantity.list'),
+    path('stock_quantity/create', views.stock_quantity_create, name='stock_quantity.create'),
+    path('stock_quantity/save', views.stock_quantity_save, name='stock_quantity.save'),
+    path('stock_quantity/edit/<int:id>', views.stock_quantity_edit, name='stock_quantity.edit'),
+    path('stock_quantity/update/<int:id>', views.stock_quantity_update, name='stock_quantity.update'),
 ]

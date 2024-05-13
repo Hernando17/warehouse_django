@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Products, Brands, Locations
+from .models import Products, Brands, Locations, StockMoves, StockQuantity
 
 def index(request):
     data = {
@@ -176,3 +176,104 @@ def location_delete(request, id):
     location.delete()
 
     return redirect('location.list')
+
+def stock_move_list(request):
+    data = {
+        'title':'Stock Move List',
+        'data': StockMoves.objects.all()
+    }
+
+    return render(request, "stock_move/index.html", data)
+
+def stock_move_create(request):
+    data = {
+        'products': Products.objects.all(),
+        'locations': Locations.objects.all()
+    }
+
+    return render(request, "stock_move/create.html", data)
+
+def stock_move_save(request):
+    if request.method == 'POST':
+        product_id = request.POST['product_id']
+        location_id = request.POST['location_id']
+        location_dest_id = request.POST['location_dest_id']
+        quantity = request.POST['quantity']
+
+        stock_move = StockMoves(product_id=product_id, location_id=location_id, location_dest_id=location_dest_id, quantity=quantity)
+        stock_move.save()
+
+        stock_quantity_from = StockQuantity.objects.filter(product_id=product_id, location_id=location_id).first()
+        stock_quantity_to = StockQuantity.objects.filter(product_id=product_id, location_id=location_dest_id).first()
+
+        if stock_quantity_from:
+            if stock_quantity_from.quantity < int(quantity):
+                raise Exception('Stock not enough')
+
+            stock_quantity_from.quantity -= int(quantity)
+            stock_quantity_from.save()
+            
+            if stock_quantity_to:
+                stock_quantity_to.quantity += int(quantity)
+                stock_quantity_to.save()
+            else:
+                stock_quantity = StockQuantity(product_id=product_id, location_id=location_dest_id, quantity=quantity)
+                stock_quantity.save()
+        else:
+            raise Exception('Stock not found')    
+        
+
+    return redirect('stock_move.list')
+
+def stock_quantity_list(request):
+    data = {
+        'title':'Stock Quantity List',
+        'data': StockQuantity.objects.all()
+    }
+
+    return render(request, "stock_quantity/index.html", data)
+
+def stock_quantity_create(request):
+    data = {
+        'products': Products.objects.all(),
+        'locations': Locations.objects.all()
+    }
+
+    return render(request, "stock_quantity/create.html", data)
+
+def stock_quantity_save(request):
+    if request.method == 'POST':
+        product_id = request.POST['product_id']
+        location_id = request.POST['location_id']
+        quantity = request.POST['quantity']
+
+        stock_quantity = StockQuantity(product_id=product_id, location_id=location_id, quantity=quantity)
+        stock_quantity.save()
+
+    return redirect('stock_quantity.list')
+
+def stock_quantity_edit(request, id):
+    stock_quantity = StockQuantity.objects.get(id=id)
+
+    data = {
+        'data': stock_quantity,
+        'products': Products.objects.all(),
+        'locations': Locations.objects.all()
+    }
+
+    return render(request, "stock_quantity/edit.html", data)
+
+def stock_quantity_update(request, id):
+    if request.method == 'POST':
+        product_id = request.POST['product_id']
+        location_id = request.POST['location_id']
+        quantity = request.POST['quantity']
+
+        stock_quantity = StockQuantity.objects.get(id=id)
+        stock_quantity.product_id = product_id
+        stock_quantity.location_id = location_id
+        stock_quantity.quantity = quantity
+        stock_quantity.save()
+
+    return redirect('stock_quantity.list')
+

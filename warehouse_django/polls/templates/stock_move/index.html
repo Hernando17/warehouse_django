@@ -1,0 +1,31 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container">
+    <div class="d-flex flex-column align-items-end">
+        <a href="{% url 'stock_move.create' %}" class="btn btn-gradient-primary">Create</a>
+    </div>
+
+    <table id="dataTable" class="table table-striped table-bordered mt-1" style="width: 100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product Name</th>
+                <th>From Location</th>
+                <th>To Location</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for move in data %}
+            <tr>
+                <td class="text-center">{{move.id}}</td>
+                <td>{{move.product.name}}</td>
+                <td>{{move.location.name}}</td>
+                <td>{{move.location_dest.name}}</td>
+                <td>{{move.quantity}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
