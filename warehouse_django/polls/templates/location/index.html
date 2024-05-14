@@ -6,7 +6,7 @@
     <table id="dataTable" class="table table-striped table-bordered mt-1" style="width: 100%">
         <thead>
             <tr>
-                <th>#</th>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Phone</th>
@@ -24,9 +24,11 @@
                 <td>{{location.phone}}</td>
                 <td>{{location.address}}</td>
                 <td>
-                    {% for product in stock_quantity %}
-                    {% if product.location_id == location.id %}
-                    <span class="badge bg-secondary">{{ product.product.name }}</span>
+                    {% for stock in stock_quantity %}
+                    {% if stock.location_id == location.id %}
+                    <a href="{% url 'product.detail' stock.product_id %}" class="badge bg-secondary">
+                        {{ stock.product.name }}
+                    </a>
                     {% endif %}
                     {% endfor %}
                 </td>

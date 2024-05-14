@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Products, Brands, Locations, StockMoves, StockQuantity
 from django.contrib import messages
 from django.db import DatabaseError, transaction
+import datetime
 
 def index(request):
     data = {
@@ -62,6 +63,7 @@ def product_update(request, id):
         product.price = price
         product.description = description
         product.brand_id = int(brand_id)
+        product.updated_at = datetime.datetime.now()
         product.save()
 
     return redirect('product.list')
@@ -71,6 +73,15 @@ def product_delete(request, id):
     product.delete()
 
     return redirect('product.list')
+
+def product_detail(request, id):
+    product = Products.objects.get(id=id)
+
+    data = {
+        'data': product,
+    }
+
+    return render(request, "product/detail.html", data)
 
 def brand_list(request):
     data = {
@@ -122,6 +133,7 @@ def brand_update(request, id):
         brand.website = website
         brand.phone = phone
         brand.address = address
+        brand.updated_at = datetime.datetime.now()
         brand.save()
 
     return redirect('brand.list')
@@ -177,6 +189,7 @@ def location_update(request, id):
         location.description = description
         location.phone = phone
         location.address = address
+        location.updated_at = datetime.datetime.now()
         location.save()
 
     return redirect('location.list')
@@ -223,13 +236,16 @@ def stock_move_save(request):
 
         if stock_quantity_from:
             stock_quantity_from.quantity -= int(quantity)
+            stock_quantity_from.updated_at = datetime.datetime.now()
             stock_quantity_from.save()
             
             if stock_quantity_to:
                 stock_quantity_to.quantity += int(quantity)
+                stock_quantity_to.updated_at = datetime.datetime.now()
                 stock_quantity_to.save()
             else:
                 stock_quantity = StockQuantity(product_id=product_id, location_id=location_dest_id, quantity=quantity)
+                stock_quantity.updated_at = datetime.datetime.now()
                 stock_quantity.save()
         else:
             messages.add_message(request, messages.ERROR, 'Product not found in source location') 
@@ -286,6 +302,7 @@ def stock_quantity_update(request, id):
         stock_quantity.product_id = product_id
         stock_quantity.location_id = location_id
         stock_quantity.quantity = quantity
+        stock_quantity.updated_at = datetime.datetime.now()
         stock_quantity.save()
 
     return redirect('stock_quantity.list')
