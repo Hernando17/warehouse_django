@@ -31,7 +31,8 @@
                     <a href="{% url 'brand.edit' brand.id %}" class="btn btn-gradient-info">Edit</a>
                     <form action="{% url 'brand.delete' brand.id %}" method="post" class="d-inline">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-gradient-danger">Delete</button>
+                        <button type="submit" class="btn btn-gradient-danger"
+                            onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </td>
             </tr>

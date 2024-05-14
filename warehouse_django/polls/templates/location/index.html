@@ -11,6 +11,7 @@
                 <th>Description</th>
                 <th>Phone</th>
                 <th>Address</th>
+                <th>Products</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -22,11 +23,19 @@
                 <td>{{location.description}}</td>
                 <td>{{location.phone}}</td>
                 <td>{{location.address}}</td>
+                <td>
+                    {% for product in stock_quantity %}
+                    {% if product.location_id == location.id %}
+                    <span class="badge bg-secondary">{{ product.product.name }}</span>
+                    {% endif %}
+                    {% endfor %}
+                </td>
                 <td class="d-flex gap-1">
                     <a href="{% url 'location.edit' location.id %}" class="btn btn-gradient-info">Edit</a>
                     <form action="{% url 'location.delete' location.id %}" method="post" class="d-inline">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-gradient-danger">Delete</button>
+                        <button type="submit" class="btn btn-gradient-danger"
+                            onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </td>
             </tr>

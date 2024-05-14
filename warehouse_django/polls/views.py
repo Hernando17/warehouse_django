@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from .models import Products, Brands, Locations, StockMoves, StockQuantity
+from django.contrib import messages
+from django.db import DatabaseError, transaction
 
 def index(request):
     data = {
         'title':'Dashboard'
     }   
-    return render(request, "index.html", data) 
+    return redirect('product.list')
+
 
 def product_list(request):
     result = Products.objects.all()
@@ -60,6 +63,12 @@ def product_update(request, id):
         product.description = description
         product.brand_id = int(brand_id)
         product.save()
+
+    return redirect('product.list')
+
+def product_delete(request, id):
+    product = Products.objects.get(id=id)
+    product.delete()
 
     return redirect('product.list')
 
@@ -126,7 +135,8 @@ def brand_delete(request, id):
 def location_list(request):
     data = {
         'title':'Location List',
-        'data': Locations.objects.all()
+        'data': Locations.objects.all(),
+        'stock_quantity': StockQuantity.objects.all()
     }
 
     return render(request, "location/index.html", data)
@@ -200,16 +210,18 @@ def stock_move_save(request):
         location_dest_id = request.POST['location_dest_id']
         quantity = request.POST['quantity']
 
-        stock_move = StockMoves(product_id=product_id, location_id=location_id, location_dest_id=location_dest_id, quantity=quantity)
-        stock_move.save()
-
         stock_quantity_from = StockQuantity.objects.filter(product_id=product_id, location_id=location_id).first()
         stock_quantity_to = StockQuantity.objects.filter(product_id=product_id, location_id=location_dest_id).first()
 
-        if stock_quantity_from:
-            if stock_quantity_from.quantity < int(quantity):
-                raise Exception('Stock not enough')
+        if stock_quantity_from.quantity < int(quantity):
+            messages.add_message(request, messages.ERROR, 'Stock not enough')
 
+            return redirect('stock_move.create')
+
+        stock_move = StockMoves(product_id=product_id, location_id=location_id, location_dest_id=location_dest_id, quantity=quantity)
+        stock_move.save()
+
+        if stock_quantity_from:
             stock_quantity_from.quantity -= int(quantity)
             stock_quantity_from.save()
             
@@ -220,7 +232,8 @@ def stock_move_save(request):
                 stock_quantity = StockQuantity(product_id=product_id, location_id=location_dest_id, quantity=quantity)
                 stock_quantity.save()
         else:
-            raise Exception('Stock not found')    
+            messages.add_message(request, messages.ERROR, 'Product not found in source location') 
+            return redirect('stock_move.create')  
         
 
     return redirect('stock_move.list')
@@ -277,3 +290,8 @@ def stock_quantity_update(request, id):
 
     return redirect('stock_quantity.list')
 
+def stock_quantity_delete(request, id):
+    stock_quantity = StockQuantity.objects.get(id=id)
+    stock_quantity.delete()
+
+    return redirect('stock_quantity.list')

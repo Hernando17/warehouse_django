@@ -4,6 +4,16 @@
         <div class="card-header">
             <h4 class="card-title">Stock Move Create</h4>
         </div>
+        {% if messages %}
+        <div class="messages mt-2">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{% if message.tags != 'error' %}{{ message.tags }}{% else %}danger{% endif %} p-1 mx-1"
+                {% endif %}>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         <div class="card-body">
             <form action="{% url 'stock_move.save' %}" method="post" class="needs-validation">
                 {% csrf_token %}

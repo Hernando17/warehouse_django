@@ -26,12 +26,13 @@ urlpatterns = [
     path('product/save', views.product_save, name='product.save'),
     path('product/edit/<int:id>', views.product_edit, name='product.edit'),
     path('product/update/<int:id>', views.product_update, name='product.update'),
+    path('product/delete/<int:id>', views.product_delete, name='product.delete'),
 
     path('brand', views.brand_list, name='brand.list'),
     path('brand/create', views.brand_create, name='brand.create'),
     path('brand/save', views.brand_save, name='brand.save'),
     path('brand/edit/<int:id>', views.brand_edit, name='brand.edit'),
-    path('brand/updat/<int:id>e', views.brand_update, name='brand.update'),
+    path('brand/update/<int:id>', views.brand_update, name='brand.update'),
     path('brand/delete/<int:id>', views.brand_delete, name='brand.delete'),
 
     path('location', views.location_list, name='location.list'),
@@ -50,4 +51,5 @@ urlpatterns = [
     path('stock_quantity/save', views.stock_quantity_save, name='stock_quantity.save'),
     path('stock_quantity/edit/<int:id>', views.stock_quantity_edit, name='stock_quantity.edit'),
     path('stock_quantity/update/<int:id>', views.stock_quantity_update, name='stock_quantity.update'),
+    path('stock_quantity/delete/<int:id>', views.stock_quantity_delete, name='stock_quantity.delete'),
 ]
