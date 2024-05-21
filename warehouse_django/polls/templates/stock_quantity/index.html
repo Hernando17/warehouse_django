@@ -24,7 +24,7 @@
                 <td>{{quant.quantity}}</td>
                 <td>{{ quant.updated_at }}</td>
                 <td class="d-flex gap-1">
-                    <a href="{% url 'stock_quantity.edit' quant.id %}" class="btn btn-gradient-info">Edit</a>
+                    <a href="{% url 'stock_quantity.edit' quant.id %}" class="btn btn-gradient-info">Detail</a>
                     <form action="{% url 'stock_quantity.delete' quant.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-gradient-danger"

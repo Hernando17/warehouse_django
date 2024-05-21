@@ -11,7 +11,6 @@
                 <th>Description</th>
                 <th>Phone</th>
                 <th>Address</th>
-                <th>Products</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -23,15 +22,6 @@
                 <td>{{location.description}}</td>
                 <td>{{location.phone}}</td>
                 <td>{{location.address}}</td>
-                <td>
-                    {% for stock in stock_quantity %}
-                    {% if stock.location_id == location.id %}
-                    <a href="{% url 'product.detail' stock.product_id %}" class="badge bg-secondary">
-                        {{ stock.product.name }}
-                    </a>
-                    {% endif %}
-                    {% endfor %}
-                </td>
                 <td class="d-flex gap-1">
                     <a href="{% url 'location.edit' location.id %}" class="btn btn-gradient-info">Edit</a>
                     <form action="{% url 'location.delete' location.id %}" method="post" class="d-inline">

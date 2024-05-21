@@ -107,10 +107,12 @@ def product_edit(request, id):
 
     product = Products.objects.get(id=id)
     brands = Brands.objects.all()
+    locations = StockQuantity.objects.filter(product_id=id)
 
     data = {
         'data': product,
         'brands': brands,
+        'locations': locations,
     }
 
     return render(request, "product/edit.html", data)
@@ -273,9 +275,11 @@ def location_edit(request, id):
         return redirect('login')
 
     location = Locations.objects.get(id=id)
+    stock_quantity = StockQuantity.objects.filter(location_id=id)
 
     data = {
         'data': location,
+        'stock_quantity': stock_quantity
     }
 
     return render(request, "location/edit.html", data)

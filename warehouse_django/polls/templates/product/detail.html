@@ -7,7 +7,7 @@
             <p>Description : {{data.description}}</p>
             <p>Price : {{data.price}}</p>
             <p>Brand : {{data.brand.name}}</p>
-            <a href="{% url 'product.edit' data.id %}" class="btn btn-gradient-info">Edit</a>
+            <a href="{% url 'product.edit' data.id %}" class="btn btn-gradient-info">Detail</a>
             <form action="{% url 'product.delete' data.id %}" method="post" class="d-inline">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-gradient-danger"

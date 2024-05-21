@@ -24,7 +24,7 @@
                 <td>{{product.brand.name}}</td>
                 <td>{{product.description}}</td>
                 <td class="d-flex gap-1">
-                    <a href="{% url 'product.edit' product.id %}" class="btn btn-gradient-info">Edit</a>
+                    <a href="{% url 'product.edit' product.id %}" class="btn btn-gradient-info">Detail</a>
                     <form action="{% url 'product.delete' product.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-gradient-danger"
